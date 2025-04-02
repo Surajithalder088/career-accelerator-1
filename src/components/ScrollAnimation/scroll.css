@@ -1,0 +1,56 @@
+::-webkit-scrollbar {
+    height: 5px;
+    width: 5px;
+    background: var(--background);
+  }
+  
+  ::-webkit-scrollbar-thumb {
+    background: var(--accent);
+    -webkit-border-radius: 1ex;
+  }
+  
+  ::-webkit-scrollbar-corner {
+    background: var(--background);
+  }
+  
+  html {
+    scroll-snap-type: y mandatory;
+  }
+  
+  /* Parallax container */
+  .parallax {
+    overflow: hidden;
+    margin: 0;
+    white-space: nowrap;
+    margin-left: 15%;
+    margin-right: 15%;
+  }
+  
+  /* Scroller styling */
+  .parallax .scroller {
+    white-space: nowrap;
+  }
+  
+  /* Marquee content container */
+  .marquee-content {
+    display: inline-flex;
+    white-space: nowrap;
+  }
+  
+  /* Individual marquee item */
+  .marquee-item {
+    flex: 0 0 auto;
+    width: 130px;
+    height: 130;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 40px; /* This sets the spacing between logos */
+  }
+  
+  /* Make sure images don't cause overflow */
+  .marquee-item img {
+    max-width: 100%;
+    height: auto;
+    object-fit: contain;
+  }
