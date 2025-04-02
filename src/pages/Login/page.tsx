@@ -87,6 +87,7 @@ const handleSubmit=async(e:React.FormEvent)=>{
                 <button className="!bg-blue-400">login</button>
                 <p>New user ? <a href="/signup">Register</a></p>
             </form>
+            <p className=" mx-20 text-green-500"> NOTE*  --for dummy testing : email - buddhiswarh597@gmail.com password- 123456</p>
              <Footer/>
         </div>
     </div>
