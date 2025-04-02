@@ -9,6 +9,7 @@
     "lint": "eslint .",
     "preview": "vite preview"
   },
+  "homepage":"/",
   "dependencies": {
     "@motionone/utils": "^10.18.0",
     "@reduxjs/toolkit": "^2.6.1",
