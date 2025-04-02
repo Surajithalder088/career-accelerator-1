@@ -22,13 +22,14 @@ const SignupPaqge = () => {
  const[nd,set2nd]=useState("")
  const[rd,set3rd]=useState("")
  const[th,set4th]=useState("")
+ const [load,setLoad]=useState(false)
 
       
 
       const apiUrl =import.meta.env.VITE_API_URL
   
   const handleSubmit=async(e:React.FormEvent)=>{
-
+      setLoad(true)
       e.preventDefault()
       if(!fullName.includes(" ")){
         setValidName(false)
@@ -53,6 +54,7 @@ const SignupPaqge = () => {
      if(res.status!==201){
       console.log("some error",res.data.response.data.message);
       alert(`${res.data.response.data.message}`)
+      setLoad(false)
       return
      }
 
@@ -156,7 +158,10 @@ const SignupPaqge = () => {
                       placeholder="address"
                      value={address}
                      onChange={(e:React.ChangeEvent<HTMLTextAreaElement>)=>setAddress(e.target.value)}></textarea>
-                    <button className="!bg-blue-400">signup</button>
+                    <button className="!bg-blue-400">
+                      {load?"running...":
+                      "signup"}
+                      </button>
                     <p>Already have acount? <a href="/login">login</a></p>
                 </form>)
 }

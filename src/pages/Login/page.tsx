@@ -14,6 +14,7 @@ const LoginPage = () => {
     const[rPassword,setRPassword]=useState("")
     const navigate=useNavigate()
     const dispatch=useDispatch()
+    const [load,setLoad]=useState(false)
 
 const handleSubmit=async(e:React.FormEvent)=>{
     e.preventDefault()
@@ -22,6 +23,7 @@ const handleSubmit=async(e:React.FormEvent)=>{
         alert("password and confirm password not same")
         return
     }
+    setLoad(true)
     const res=await axios.post(`${apiUrl}/api/user/login`,{
         
         email,password,
@@ -84,7 +86,10 @@ const handleSubmit=async(e:React.FormEvent)=>{
                  type="password" placeholder="confirm password"
                  value={rPassword}
                 onChange={(e:React.ChangeEvent<HTMLInputElement>)=>setRPassword(e.target.value)}/>
-                <button className="!bg-blue-400">login</button>
+                <button className="!bg-blue-400">
+                   { load?"running..":
+                   "login"}
+                    </button>
                 <p>New user ? <a href="/signup">Register</a></p>
             </form>
             <p className=" mx-20 text-green-500"> NOTE*  --for dummy testing : email - buddhiswarh597@gmail.com password- 123456</p>
