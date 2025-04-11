@@ -10,6 +10,7 @@ import { login } from "../../store/userSlice"
 //import { RootState } from "../../store/store"
 import { useNavigate } from "react-router-dom"
 import axios from "axios"
+import { toast } from "sonner"
 
 const apiUrl =import.meta.env.VITE_API_URL
 
@@ -60,6 +61,7 @@ const JobSearching = () => {
             if(authUser.name!==""){
             dispatch(login(authUser))
             if(authUser.isHR===true){
+              toast.error("You are a HR,not job seeker")
               navigate('/login')
             }
           
