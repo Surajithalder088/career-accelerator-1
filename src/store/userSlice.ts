@@ -8,6 +8,7 @@ interface UserState{
     experience:string;
     id:string;
     isHR:boolean;
+   
     
 }
 
@@ -19,6 +20,7 @@ const initialState:UserState={
     experience:"",
     id:"",
     isHR:false,
+    
     
 }
 

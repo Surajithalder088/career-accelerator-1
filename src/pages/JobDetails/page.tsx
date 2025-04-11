@@ -21,7 +21,18 @@ interface UserState{
   company:string;
   experience:string;
   id:string;
-  isHR:boolean
+  isHR:boolean;
+  
+}
+type UserType={
+  name:string;
+  email:string;
+  address:string;
+  company:string;
+  experience:string;
+  id:string;
+  isHR:boolean;
+  resumeUrl:string
 }
 
 interface JobPost{
@@ -33,7 +44,9 @@ interface JobPost{
   id:number
   salary:string
   title:string
-  userId:string
+  userId:string,
+  flags:string
+  updatedAt:string
   
   }
 
@@ -44,9 +57,12 @@ interface JobPost{
     userId:string
   }
   interface Applied{
+    id:number
     userId:string
     jobId:number
     status:string
+    user:UserType
+    updatedAt:string
   }
 
 const JobDetails = () => {
@@ -55,13 +71,29 @@ const JobDetails = () => {
   const applicatons:Number[]=useSelector((state:RootState)=>state.applications)
   const [applying,setApplying]=useState(false)
   const [postApplication,setPostApplication]=useState<Applied[]>([])
+  const [myApplication,setMyApplication]=useState<Application>()
   
   const id=Number(jobid.jobid)
   console.log("job id",id);
 
   
+
+  
   const[isHR,setIsHR]=useState(false)
-  const [jobDeatil,setJobsDetails]=useState<JobPost|null>(null)
+
+  const [jobDeatil,setJobsDetails]=useState<JobPost>({
+
+  address:" ",
+  company:" ",
+  description:" ",
+  experience:" ",
+  id:0,
+  salary:" ",
+  title:" ",
+  userId:" ",
+  flags:" ",
+  updatedAt:" "
+  })
 
   const user:UserState=useSelector((state:RootState)=>state.user)
 const navigate=useNavigate()
@@ -87,6 +119,7 @@ const navigate=useNavigate()
        const res=await axios.post(`${apiUrl}/api/jobs/detail`,{id})
     console.log(res);
     setJobsDetails(res.data.jobs)
+
 
     } catch (error) {
       console.log(error);
@@ -124,7 +157,7 @@ const navigate=useNavigate()
 
      const appArray :Application[]= res.data.jobs
 
-      
+    setMyApplication ( appArray.find(app=>app.jobId===id))
       
      const arrr= appArray.map((item)=>item.jobId)
      console.log("arr",arrr);
@@ -169,7 +202,7 @@ dispatch(addApplication(ele))  // setting all the job ids this auth user applied
   const deleteJob=async()=>{
   try { const res=await axios.post(`${apiUrl}/api/jobs/delete-post`,{id},{withCredentials:true})
   console.log(res);
-  if(res.status===200){
+  if(res.status===201){
     alert('post deleted')
     navigate("/dashboard")
   }
@@ -179,6 +212,7 @@ dispatch(addApplication(ele))  // setting all the job ids this auth user applied
     
   }
   }
+ 
 
   const accept=async(id:number)=>{
     console.log(isHR);
@@ -186,9 +220,10 @@ dispatch(addApplication(ele))  // setting all the job ids this auth user applied
     const applicationId:number=id
     const status="accepted"
     try {
-      const res=await axios.put(`${apiUrl}/api/application/application-status`,{applicationId,status},{withCredentials:true})
+      const res=await axios.post(`${apiUrl}/api/application/application-status`,{applicationId,status},{withCredentials:true})
       console.log("applications:",res);
-     
+      
+     navigate(`/job-detail/${id}`)
       
     } catch (error) {
       console.log(error);
@@ -199,9 +234,9 @@ dispatch(addApplication(ele))  // setting all the job ids this auth user applied
     const applicationId:number=id
     const status="rejected"
     try {
-      const res=await axios.put(`${apiUrl}/api/application/application-status`,{applicationId,status},{withCredentials:true})
+      const res=await axios.post(`${apiUrl}/api/application/application-status`,{applicationId,status},{withCredentials:true})
       console.log("applications:",res);
-     
+      navigate(`/job-detail/${id}`)
       
     } catch (error) {
       console.log(error);
@@ -214,13 +249,15 @@ dispatch(addApplication(ele))  // setting all the job ids this auth user applied
   if(user.isHR===true){
     fetchApplications()
   }
+  
 
-  }, [user])
+  }, [user,postApplication])
 
 useEffect(() => {
 
   authFetching()
   fetchJobDetails()
+   
 
 }, [])
 
@@ -261,23 +298,40 @@ useEffect(() => {
             </div>
             
             <div className=" p-10 [@media(max-width:400px)]:px-4 border mt-4 rounded-lg [@media(max-width:400px)]:min-w-screen">
+          
+          {user.isHR===false?
+           <div className="text-xl" >
+                {myApplication?.status==="applied"?<div className="text-yellow-400">pending</div>
+              :
+              myApplication?.status==="accepted"?<div className="text-green-500">selected</div>
+              :<div className="text-red-600">rejected</div>
+              }
+              </div>:''}
+
             <div className="[@media(max-width:400px)]:p-2">
-            <div className="text-[27px] font-bold">{jobDeatil?.title}</div>
-            <div className=" flex gap-20 py-2">
+              
+            <div className="text-[27px] font-extrabold">{jobDeatil?.title}</div>
+            <div className=" flex gap-10 py-2">
             <img src="/vite.svg"/>
-            <div className="text-[22px]">{jobDeatil?.company}</div>
+            <div className="text-[22px] font-bold">{jobDeatil?.company}</div>
             </div>
-            <div className="text-[22px] p-3">🏢{jobDeatil?.address}</div>
-            <div className="text-[22px] p-3">💻{jobDeatil?.experience}</div>
-            <div className="text-[22px] p-3">💵{jobDeatil?.salary}</div>
-            <div className="text-[22px] p-3">🕒{"3 days ago"}</div>
+            <div className="text-[22px] font-bold p-3">🏢{jobDeatil?.address}</div>
+            <div className="text-[22px] font-bold p-3">💻{jobDeatil?.experience}</div>
+            <div className="text-[22px] font-bold p-3">💵{jobDeatil?.salary}</div>
+            <div className="text-[22px] font-bold p-3">🕒{new Date(jobDeatil?.updatedAt).toLocaleDateString()}</div>
         </div>
-            <div className="text-[22px] pt-6 [@media(max-width:400px)]:px-3">
-                Lorem, ipsum dolor sit amet consectetur adipisicing elit. Doloribus aliquid natus rem accusantium quas vel blanditiis, dolores ea, pariatur commodi architecto et molestias debitis culpa molestiae consequatur similique hic mollitia tenetur! Reprehenderit nulla iure rem,
-                 officiis magnam, recusandae quidem dolorum autem ullam dignissimos officia. Magni soluta sequi ratione illum sapiente fugit minus temporibus voluptatibus? Provident, illo molestias quas ipsum ab repellat. Accusamus labore natus error reprehenderit necessitatibus earum 
-                 et ab repellendus dolorum rerum, mollitia aliquid porro animi molestiae doloribus odit alias, tempora laboriosam asperiores voluptas harum obcaecati quod. Odit suscipit debitis optio illo minus corrupti, aut in laboriosam placeat quos non similique saepe aspernatur animi 
-                 illum blanditiis cupiditate error architecto corporis, eum amet perspiciatis, ipsa expedita modi!
-                 Laboriosam laudantium beatae molestiae odio neque aliquid ad voluptate ab ea? Est, illo!
+            <div className="text-[22px] pt-6 flex flex-col gap-4 [@media(max-width:400px)]:px-3">
+              <div className="flex gap-1 flex-wrap max-w-[100%]">
+                {jobDeatil?.flags.split(',').map(str=>(
+                  <div className="bg-gray-600 p-2 rounded-xl">
+                    {str}
+                  </div>
+                ))
+                }
+              </div>
+              <div>
+               {jobDeatil?.description}
+                 </div>
             </div>
             </div>
             
@@ -285,24 +339,54 @@ useEffect(() => {
 
         {
           user.isHR &&(
-            <div className="ml-30 mt-20 flex flex-wrap">
+            <div className="mx-30 mt-20 [@media(max-width:400px)]:m-10"> 
+            
+              <h4 className="text-2xl font-bold mb-4">All applications of this job</h4>
+              <div className="w-[100%] h-1 bg-white"></div>
+            <div className=" p-4 my-2 flex flex-wrap">
+             
 {
+  postApplication.length>0?
   postApplication.map((item)=>(
-    <div className=" border rounded-lg p-10">
-      <p>job id:{item.jobId}</p>
-      <p>user id:{item.userId}</p>
-      <p>status :{item.status}</p>
-      <div className="flex justify-between">
+    <div className=" border rounded-lg p-10 min-w-[80px] [@media(max-width:400px)]:w-fit [@media(max-width:400px)]:overflow-x-auto">
+     
+    
+     
+      <p className="text-2xl font-semibold flex gap-3 items-center">
+        <img src="/user-3-fill.png" 
+        className=" bg-white p-2 w-10 h-10 rounded-full"/>
+      {item.user.name}</p>
+      <p className="text-xl">{item.user.email}</p>
+      <p>Ex :{item.user.experience}</p>
+       <p>status :
+        {item.status==="rejected"?<div className="text-red-600">rejected</div>:
+        item.status==="accepted"?<div className="text-green-500">accepted</div>:<div className="text-yellow-400">applied</div>
+        }
+        </p>
+      <p className="w-fit h-fit p-2 rounded-2xl cursor-pointer my-2 bg-gray-600"
+      onClick={()=>window.open(item.user.resumeUrl,"_blank")}
+      >view resume</p>
+      
+  <p>applied on: {
+  new Date(item.updatedAt).toLocaleDateString()
+    
+    }</p>
+
+      <div className="flex justify-between gap-2">
         <button className=" !bg-transparent text-red-500"
-        onClick={()=>reject(id)}
+        onClick={()=>reject(item.id)}
         >reject</button>
         <button className=" !bg-transparent text-green-500"
-        onClick={()=>accept(id)}
+        onClick={()=>accept(item.id)}
         >accept</button>
         </div>
     </div>
   ))
+  :<div className="my-3 text-xl">
+    <p>No candidate applied still now</p>
+  </div>
 }
+            </div>
             </div>
           )
         }

@@ -48,6 +48,7 @@ interface Application{
 
 
 export default function DashboardPage() {
+  const [updating,setUpadating]=useState(false)
   const [status,setStatus]=useState("")
   const[isHR,setIsHR]=useState(false)
   const[jobPost,setJobPost]=useState<JobPost[]>([])
@@ -57,6 +58,13 @@ export default function DashboardPage() {
   const router = useNavigate();
     const user=useSelector((state:RootState)=>state.user)
     const dispatch=useDispatch()
+
+    const [name,setName]=useState(user.name)
+   
+    const [address,setAddress]=useState(user.address)
+    const [company,setCompany]=useState(user.company)
+    const [experience,setExperience]=useState(user.experience)
+    const [resumeUrl,setResumeUrl]=useState("")
   
     const authFetching=async()=>{
       setStatus("loading")
@@ -149,6 +157,9 @@ export default function DashboardPage() {
       fetchingHRjob()
       jobFetching()
       fetchingApplidJobs()
+
+      // for handling update profile
+      
     }
     
   }, [user,jobArray])
@@ -172,6 +183,50 @@ export default function DashboardPage() {
         </div>
       </div>
     );
+  }
+
+  const handleUpdate=async()=>{
+    try {
+      const res= await axios.post(`${apiUrl}/api/user/update`,{
+        name,
+        email:user.email,
+        address,
+        isHR:user.isHR,
+        company,
+        experience,
+        resumeUrl
+      },{withCredentials:true})
+
+      console.log(res.data);
+      
+
+      if(res.status!==200){
+        console.log("user not updated as status not success",res);
+        alert("Failed to update")
+        return
+        
+      }
+      
+
+
+      const authUser={
+        name:res.data.user.name,
+        email:res.data.user.email,
+        address:res.data.user.address,
+        company:res.data.user.company,
+        experience:res.data.user.experience,
+        id:res.data.user.id,
+        isHR:res.data.user.isHR,
+            }
+           dispatch(login(authUser)) 
+            setUpadating(false)
+
+      
+    } catch (error) {
+      console.log("failed to update user",error);
+      alert("Some error occured")
+      
+    }
   }
   
   const logout=async()=>{
@@ -209,32 +264,85 @@ export default function DashboardPage() {
           </div>
           <div>
             <div className="space-y-6">
-              <div>
-                <h2 className="text-xl font-semibold">Account Information</h2>
+              <div >
+                <h2 className="text-xl font-semibold flex gap-4 items-center">
+                { updating===true?"Update Profile":"Account Information"
+                 }
+                <img
+                className="w-8 h-8 cursor-pointer hover:bg-amber-50 p-1 rounded-full"
+                onClick={()=>setUpadating(!updating)}
+                src={updating===true?"/x-mark.png":"/pencil-fill.svg"}
+                />
+                </h2>
+          { updating===true?
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mt-4">
                   <div>
                     <p className="text-sm text-gray-300">Name</p>
-                    <p className="font-medium">{user.name}</p>
+                    <input className="font-medium outline-1 p-1 rounded-2xl" value={name}
+                    onChange={(e)=>setName(e.target.value)}
+                    />
+                  </div>
+                  
+                  <div>
+                    <p className="text-sm text-gray-300">Address</p>
+                    <input className="font-medium outline-1 p-1 rounded-2xl" value={address}
+                     onChange={(e)=>setAddress(e.target.value)}/>
+                  </div>
+
+                  { user.isHR===true?
+                    <div>
+                    <p className="text-sm text-gray-300">Company</p>
+                    <input className="font-medium outline-1 p-1 rounded-2xl" value={company}
+                     onChange={(e)=>setCompany(e.target.value)}/>
+                  </div>:
+                  <div>
+                    <p className="text-sm text-gray-300">Experience</p>
+                    <input className="font-medium outline-1 p-1 rounded-2xl" value={experience}
+                     onChange={(e)=>setExperience(e.target.value)}/>
+                  </div>}
+                  {
+                    user.isHR===false?<div>
+                    <p className="text-sm text-gray-300">Resume</p>
+                    <input className="font-medium outline-1 p-1 rounded-2xl" value={resumeUrl}
+                     onChange={(e)=>setResumeUrl(e.target.value)}/>
+                  </div>:""}
+
+                  
+                  
+                  <div>
+                    <p className="text-red-500">Enter all fields to keep user's data accurate</p>
+                    <button className="!bg-blue-400"
+                    onClick={handleUpdate}
+                    >update</button>
+                  </div>
+                  
+                </div>:
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mt-4">
+                  <div>
+                    <p className="text-sm text-gray-300">Name</p>
+                    <p className="font-bold text-xl">{user.name}</p>
                   </div>
                   <div>
                     <p className="text-sm text-gray-300">Email</p>
-                    <p className="font-medium">{user.email}</p>
+                    <p className="font-bold text-xl">{user.email}</p>
                   </div>
                   <div>
                     <p className="text-sm text-gray-300">Address</p>
-                    <p className="font-medium">{user.address}</p>
+                    <p className="font-bold">{user.address}</p>
                   </div>
 
+                 {user.isHR===true ?
                   <div>
                     <p className="text-sm text-gray-300">Company</p>
-                    <p className="font-medium">{user.company}</p>
-                  </div>
+                    <p className="font-bold">{user.company}</p>
+                  </div>:
                   <div>
                     <p className="text-sm text-gray-300">Experience</p>
-                    <p className="font-medium">{user.experience}</p>
-                  </div>
+                    <p className="font-bold">{user.experience}</p>
+                  </div>}
                   
                 </div>
+                }
               </div>
               
               <div className="border-t pt-6">

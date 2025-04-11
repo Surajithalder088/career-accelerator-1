@@ -46,7 +46,7 @@ const SignupPaqge = () => {
       }
      const res=await axios.post(`${apiUrl}/api/user/signup`,{
       name:fullName,
-      email,password,address,isHR,company:companyName,experience:"notApplicable"
+      email,password,address,isHR,company:companyName,experience:"notApplicable",resumeUrl:"notdefined"
      },{withCredentials:true})
  console.log(res);
  
