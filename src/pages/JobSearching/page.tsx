@@ -10,7 +10,7 @@ import { login } from "../../store/userSlice"
 //import { RootState } from "../../store/store"
 import { useNavigate } from "react-router-dom"
 import axios from "axios"
-import { toast } from "sonner"
+import { toast, Toaster } from "sonner"
 
 const apiUrl =import.meta.env.VITE_API_URL
 
@@ -112,7 +112,9 @@ const JobSearching = () => {
     <div className="flex flex-col  justify-center text-white [@media(max-width:400px)]:max-w-screen  bg-gradient-to-tr from-black via-[rgb(104,52,164)] via-65% to-[rgb(31,30,30)] shadow-white min-h-screen w-full overflow-x-hidden">
 
     <Navbar/>
+   
     <div className=" w-full flex gap-2 mx-30 mt-40   [@media(max-width:400px)]:flex-col [@media(max-width:400px)]:mx-10 [@media(max-width:400px)]:my-40">
+       <Toaster  richColors position="top-right"/>
       <input className="p-7 w-[70%] text-[20px] rounded-lg shadow-[inset_0px_2px_20px_-3px_rgba(_255,_255,_255,1)]"
       placeholder="Seach by job title"
       value={searchItem}

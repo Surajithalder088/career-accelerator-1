@@ -7,7 +7,7 @@ import { login } from "../../store/userSlice";
 import { useNavigate } from "react-router-dom";
 import axios from "axios"
 import { RootState } from "../../store/store";
-import { toast } from "sonner";
+import { toast, Toaster } from "sonner";
 
 const apiUrl =import.meta.env.VITE_API_URL
 
@@ -238,7 +238,9 @@ try {
    <>
    <div className="flex flex-col justify-center text-white [@media(max-width:400px)]:max-w-screen  bg-gradient-to-tr from-black via-[rgb(104,52,164)] via-65% to-[rgb(31,30,30)] shadow-white min-h-screen w-full overflow-x-hidden">
     <Navbar/>
+    
     <div className="mx-40 mt-30 [@media(max-width:400px)]:mx-2 [@media(max-width:400px)]:px-2 ">
+      <Toaster  richColors position="top-right"/>
       <div className=" text-[37px] mt-6 font-bold">Post new job  and Find top Developers </div>
       <div className="flex justify-around">
       <div className={`p-2 rounded-2xl cursor-pointer m-3 border-1 ${!postOpen?"bg-gradient-to-l from-blue-400 to bg-pink-400":"bg-gray-800"}`}
