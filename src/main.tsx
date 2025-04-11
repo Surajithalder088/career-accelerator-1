@@ -11,6 +11,7 @@ import LoginPage from './pages/Login/page.tsx'
 import JobDetails from './pages/JobDetails/page.tsx'
 import { Provider } from 'react-redux'
 import { store } from './store/store.ts'
+import { Toaster } from 'sonner'
 
 
 
@@ -18,6 +19,7 @@ import { store } from './store/store.ts'
 createRoot(document.getElementById('root')!).render(
   <StrictMode>
     <Provider store={store}>
+    <Toaster  richColors />
     <BrowserRouter>
     <Routes>
       <Route path='/' element={<App/>}/>

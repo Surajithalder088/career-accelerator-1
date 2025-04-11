@@ -4,15 +4,8 @@ export const FeatureSection = () => {
         <>
             <div className="w-full max-w-full px-4 sm:px-6 mx-auto py-8 md:py-12 flex justify-center overflow-hidden">
         <div className="flex flex-col md:flex-row gap-8 w-4xl">
-          <div className="w-full md:w-1/2 p-6 sm:p-8 bg-transparent text-white shadow-[inset_0px_0px_20px_-3px_rgba(_255,_255,_255,.5)] h-80 flex items-center justify-center">
-            <svg xmlns="http://www.w3.org/2000/svg" viewBox="50 10 150 150" className="w-4/5 h-4/5">
-              <circle cx="148" cy="35" r="20" fill="none" stroke="#888" strokeWidth="2" />
-              <text x="148" y="47" fontSize="34" fill="#888" textAnchor="middle">?</text>
-              <circle cx="110" cy="65" r="20" fill="#888" />
-              <path d="M100 150 A45 45 0 0 1 200 150" fill="#9370DB" />
-              <circle cx="150" cy="80" r="15" fill="#9370DB" />
-              <path d="M50 150 A60 60 0 0 1 170 150" fill="#888" />
-            </svg>
+          <div className="w-full md:w-1/2   bg-transparent rounded-2xl text-white  h-80 flex items-center justify-center">
+            <img className="rounded-2xl" src="/office.jpg"/>
         </div>
           <div className="w-full md:w-1/2">
             <h1 className="text-2xl md:text-3xl font-semibold text-center md:text-left mt-6 md:mt-8">

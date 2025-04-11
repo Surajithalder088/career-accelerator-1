@@ -90,7 +90,7 @@ const Slide = ({ slide, index, current, handleSlideClick }: SlideProps) => {
         }}
       >
         <div
-          className="absolute top-0 left-0 w-60 h-110 bg-[#1D1F2F] rounded-2xl overflow-hidden transition-all duration-150 ease-out"
+          className="absolute top-0 left-0 w-90 h-140 bg-[#1D1F2F] rounded-2xl overflow-hidden transition-all duration-150 ease-out"
           style={{
             transform:
               current === index
@@ -177,7 +177,7 @@ interface CarouselProps {
 }
 
 export function Carousel({ slides }: CarouselProps) {
-  const [current, setCurrent] = useState(0);
+  const [current, setCurrent] = useState(1);
 
   const handleSlideClick = (index: number) => {
     if (current !== index) {

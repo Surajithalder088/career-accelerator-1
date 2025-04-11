@@ -7,7 +7,7 @@ import { login } from "../../store/userSlice";
 import { useNavigate } from "react-router-dom";
 import axios from "axios"
 import { RootState } from "../../store/store";
-import { toast, Toaster } from "sonner";
+import { toast } from "sonner";
 
 const apiUrl =import.meta.env.VITE_API_URL
 
@@ -118,7 +118,7 @@ type UserType={
 const JobPosting = () => {
 
   const [postOpen,setPostOpen]=useState(true)
-
+  const [valid,setValid]=useState(true)
 
 const[flagsOpen,setFlagsOpen]=useState(false)
 const [loading,setLoading]=useState(false)
@@ -149,7 +149,7 @@ const [allusers,setallUsers]=useState<UserType[]>([])
            dispatch(login(authUser))
            if(authUser.isHR===false){
             toast.error("You are a job seeker,not HR")
-             navigate('/login')
+             setValid(false)
            }
          
          }else{
@@ -199,6 +199,12 @@ const [allusers,setallUsers]=useState<UserType[]>([])
   const handleSubmit=async(e:React.FormEvent)=>{
     e.preventDefault()
     setLoading(true)
+
+    if(user.isHR===false){
+      toast.error("You are not recruiter")
+      navigate('/login')
+      return
+    }
 try {
     console.log(title,salary,experience,description);
     if(title===""||salary===""||experience===""||flags===""){
@@ -240,8 +246,20 @@ try {
     <Navbar/>
     
     <div className="mx-40 mt-30 [@media(max-width:400px)]:mx-2 [@media(max-width:400px)]:px-2 ">
-      <Toaster  richColors position="top-right"/>
+      
       <div className=" text-[37px] mt-6 font-bold">Post new job  and Find top Developers </div>
+
+      {
+        valid===false?
+        <div className=" mx-30 flex flex-col items-center justify-center p-2 rounded-2xl  ">
+          <div className=" max-w-fit bg-white text-red-400 p-2 rounded-xl">
+          <p className="flex items-center gap-1"><p className="w-2 h-2 bg-red-400 rounded-full"></p>
+          You are accessing this page from a job seeker account,</p>
+          <p>Sign in as recruiter</p>
+          </div>
+        </div>
+        :""
+       }
       <div className="flex justify-around">
       <div className={`p-2 rounded-2xl cursor-pointer m-3 border-1 ${!postOpen?"bg-gradient-to-l from-blue-400 to bg-pink-400":"bg-gray-800"}`}
       onClick={()=>setPostOpen(true)}

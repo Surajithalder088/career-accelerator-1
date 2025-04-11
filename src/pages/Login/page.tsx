@@ -5,6 +5,7 @@ import { useNavigate } from "react-router-dom"
 import axios from "axios"
 import { useDispatch } from "react-redux"
 import { login } from "../../store/userSlice"
+import { Toaster } from "sonner"
 const apiUrl =import.meta.env.VITE_API_URL
 
 
@@ -69,6 +70,7 @@ const handleSubmit=async(e:React.FormEvent)=>{
   return (
     <div  className="flex flex-col justify-center text-white [@media(max-width:400px)]:max-w-screen  bg-gradient-to-tr from-black via-[rgb(104,52,164)] via-65% to-[rgb(31,30,30)] shadow-white min-h-screen w-full overflow-x-hidden">
         <div className="flex flex-col justify-center items-center">
+        <Toaster  richColors position="top-right"/>
             <form className="flex w-fit center px-40 py-20 rounded-lg  flex-col items-center gap-4 justify-center shadow-[inset_0px_2px_20px_-3px_rgba(_255,_255,_255,1)]"
             onSubmit={handleSubmit}
             >

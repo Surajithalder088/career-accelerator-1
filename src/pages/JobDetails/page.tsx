@@ -10,6 +10,7 @@ import { useNavigate, useParams } from "react-router-dom"
 import axios from "axios"
 import { RootState } from "../../store/store"
 import { addApplication } from "../../store/applicatioSlice"
+import { toast } from "sonner"
 
 const apiUrl =import.meta.env.VITE_API_URL
 //const jobDeatil=jobpost.find(job=>job.id===1)
@@ -130,6 +131,10 @@ const navigate=useNavigate()
   }
 
   const jobApply=async()=>{
+    if(user.isHR){
+      toast.error('You cannot apply from a job seeker account')
+      return
+    }
     try {
       setApplying(true)
       const res=await axios.post(`${apiUrl}/api/application/apply`,{userId:user.id,jobId:id},{
@@ -200,6 +205,8 @@ dispatch(addApplication(ele))  // setting all the job ids this auth user applied
     }
   }
   const deleteJob=async()=>{
+    
+
   try { const res=await axios.post(`${apiUrl}/api/jobs/delete-post`,{id},{withCredentials:true})
   console.log(res);
   if(res.status===201){
@@ -275,7 +282,7 @@ useEffect(() => {
             <ArrowLeft className="size-8"/></a>
             </button>}
 
-              {user.isHR?(
+              {user.isHR && jobDeatil.userId===user.id?(
                 <button className="min-w-22 max-w-fit text-black h-18 cursor-cell !bg-blue-200 p-2 [@media(max-width:400px)]:ml-10"
                 onClick={deleteJob}
                 >

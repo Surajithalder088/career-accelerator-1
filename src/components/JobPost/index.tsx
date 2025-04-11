@@ -6,6 +6,7 @@ import { useNavigate } from "react-router-dom"
 import { RootState } from "../../store/store"
 import { addApplication } from "../../store/applicatioSlice"
 import { useEffect, useState } from "react"
+import { toast } from "sonner"
 
 
 const apiUrl =import.meta.env.VITE_API_URL
@@ -37,6 +38,11 @@ const applicatons:Number[]=useSelector((state:RootState)=>state.applications)
     const navigate=useNavigate()
 
     const jobApply=async()=>{
+
+      if(user.isHR){
+        toast.error('You cannot apply from a recruiter account')
+        return
+      }
       try {
         setApplying(true)
         const res=await axios.post(`${apiUrl}/api/application/apply`,{userId:user.id,jobId:id},{
@@ -87,7 +93,7 @@ const applicatons:Number[]=useSelector((state:RootState)=>state.applications)
 
   return (
     <>
-    <div className=" m-10 p-5 rounded-lg shadow-[inset_0px_2px_20px_-3px_rgba(_255,_255,_255,1)]">
+    <div className=" m-10 p-5 rounded-lg w-[360px] h-[280px] bg-gradient-to-l from-gray-800 to-gray-600  shadow-[inset_0px_2px_20px_-3px_rgba(_255,_255,_255,1)]">
         <div className="flex items-center gap-10 justify-between">
             <div>
             <p className="font-bold text-[25px]">{title}</p>

@@ -43,12 +43,21 @@ export const Footer = () => {
                     <div className="flex gap-x-2 justify-center sm:justify-start">
                         <a href={"https://www.linkedin.com/company/persist-ventures/"}>
                             <div className="border rounded-full bg-white px-2.5 sm:px-3.5 py-1.5 sm:py-2.5 hover:bg-purple-400">
-                                <text fontSize="small" className="mb-0.5 text-gray-500 hover:text-white">in</text>    
+                                <text fontSize="small" className="mb-0.5 text-gray-500 hover:text-white">
+                                <img className="w-8 h-8" src="/linkedin.png"/></text>    
+                            </div>
+                        </a>
+                        <a href={"https://www.linkedin.com/company/persist-ventures/"}>
+                            <div className="border rounded-full bg-white px-2.5 sm:px-3.5 py-1.5 sm:py-2.5 hover:bg-purple-400">
+                                <text fontSize="small" className="mb-0.5 text-gray-500 hover:text-white">
+                                    <img className="w-8 h-8" src="/discord.png"/>
+                                    </text>    
                             </div>
                         </a>
                         <a href={"https://x.com/PersistVentures"}>
                             <div className="border rounded-full bg-white px-2.5 sm:px-3.5 py-1.5 sm:py-2.5 hover:bg-purple-400">
-                                <text fontSize="small" className="mb-0.5 !text-gray-500 hover:text-white">X</text>    
+                                <text fontSize="small" className="mb-0.5 !text-gray-500 hover:text-white">
+                                <img className="w-8 h-8" src="/twitter.png"/></text>    
                             </div>
                         </a>
                     </div>

@@ -248,7 +248,7 @@ export default function DashboardPage() {
   return (
     <div className=" [@media(max-width:400px)]:max-w-screen overflow-x-hidden text-white bg-gradient-to-tr w-[100vw] from-black via-[rgb(104,52,164)] via-65% to-[rgb(31,30,30)] h-screen">
       <div className="container mx-auto py-12 px-4 ">
-        <div className="max-w-4xl mx-auto bg-transparent text-white">
+        <div className="max-w-fit mx-auto bg-transparent  text-white">
           <div>
             <div className="text-2xl">
               <div className="flex items-center gap-x-2">
@@ -262,10 +262,16 @@ export default function DashboardPage() {
               </div>
             </div>
           </div>
-          <div>
-            <div className="space-y-6">
-              <div >
+
+          <div className=" border-t [@media(min-width:400px)]:h-screen py-4 mt-5 flex [@media(max-width:400px)]:flex-col justify-between gap-5 !overflow-hidden">
+
+          <div className="space-y-6 min-w-[32%] overflow-y-hidden  bg-gradient-to-r from-gray-800 to-gray-500 p-6 rounded-2xl h-fit">
+            
+             
+              <div className="">
                 <h2 className="text-xl font-semibold flex gap-4 items-center">
+
+                 
                 { updating===true?"Update Profile":"Account Information"
                  }
                 <img
@@ -274,18 +280,26 @@ export default function DashboardPage() {
                 src={updating===true?"/x-mark.png":"/pencil-fill.svg"}
                 />
                 </h2>
-          { updating===true?
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mt-4">
+
+                <div className="bg-gray-700 flex justify-center max-w-[400px] h-[120px] rounded-xl my-4 [@media(max-width:400px)]:w-[300px]">
+                  <div className="w-[90px] h-[90px] bg-gray-600 rounded-full mt-[30px]">
+                 <img className="rounded-full" src="/user-profile.jpg"/>
+                  </div>
+
+               </div>
+
+             { updating===true?
+                <div className="flex flex-wrap md:grid-cols-2 gap-4 mt-4 border-1 p-2 max-w-[100%] rounded-2xl">
                   <div>
                     <p className="text-sm text-gray-300">Name</p>
-                    <input className="font-medium outline-1 p-1 rounded-2xl" value={name}
+                    <input className="font-medium outline-1 p-1 rounded-2xl max-w-fit" value={name}
                     onChange={(e)=>setName(e.target.value)}
                     />
                   </div>
                   
                   <div>
                     <p className="text-sm text-gray-300">Address</p>
-                    <input className="font-medium outline-1 p-1 rounded-2xl" value={address}
+                    <input className="font-medium outline-1 p-1 rounded-2xl max-w-fit" value={address}
                      onChange={(e)=>setAddress(e.target.value)}/>
                   </div>
 
@@ -317,7 +331,7 @@ export default function DashboardPage() {
                   </div>
                   
                 </div>:
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mt-4">
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mt-4 border-1 p-2 rounded-2xl">
                   <div>
                     <p className="text-sm text-gray-300">Name</p>
                     <p className="font-bold text-xl">{user.name}</p>
@@ -344,8 +358,24 @@ export default function DashboardPage() {
                 </div>
                 }
               </div>
+
+              <div className="flex  text-black ">
+                <button 
+
+                  className="hover:!bg-black hover:text-white"
+                  onClick={logout}
+                >
+                  Sign Out
+                </button>
+            </div>
+
               
-              <div className="border-t pt-6">
+              
+              
+            </div>
+
+            <div className="flex flex-col p-6  overflow-y-scroll bg-gradient-to-l from-purple-900 to-gray-600 rounded-2xl">
+              <div className=" pt-6">
                 <h2 className="text-xl font-semibold">Your Career Progress</h2>
                 <p className="mt-2 text-gray-400">
                   Welcome to your personalized dashboard! Here you can track your career acceleration progress
@@ -360,28 +390,12 @@ export default function DashboardPage() {
                   </ul>
                 </div>
               </div>
-              
-              <div className="flex justify-end text-black ">
-                <button 
-
-                  className="hover:!bg-black hover:text-white"
-                  onClick={logout}
-                >
-                  Sign Out
-                </button>
-              </div>
-            </div>
-            
-    
-          </div>
-        </div>
-      
-      </div>
       <p className=" text-[25px] font-bold mx-20">
         {
           isHR?"All your job posting":" All your applied job"
         }
       </p>
+
         <div className="flex flex-wrap p-3 ">
     {isHR?
 
@@ -428,6 +442,17 @@ export default function DashboardPage() {
     )
     }
     </div>
+          </div>
+    
+          </div>
+
+          
+        </div>
+      
+      </div>
+
+    
+
     </div>
   );
 }
