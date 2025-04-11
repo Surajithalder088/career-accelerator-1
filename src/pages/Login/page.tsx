@@ -93,8 +93,14 @@ const handleSubmit=async(e:React.FormEvent)=>{
                    "login"}
                     </button>
                 <p>New user ? <a href="/signup">Register</a></p>
+
+                <a href="/"><p className="bg-blue-400 p-2 rounded-lg text-white">Return to home page</p></a>
             </form>
-            <p className=" mx-20 text-green-500"> NOTE*  --for dummy testing : email - buddhiswarh597@gmail.com password- 123456</p>
+            <p className=" mx-20 text-green-500 text-xl m-3"> NOTE*  --for dummy testing :Job seeker: email - buddhiswarh597@gmail.com password- 123456
+
+              <br/>  Recruiter Profile: email- rahulnaskar@gmail.com  password- 123456
+            </p>
+             
              <Footer/>
         </div>
     </div>

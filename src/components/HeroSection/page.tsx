@@ -62,8 +62,8 @@ const HeroSection = () => {
       };
   return (
     <div id="hero" className="w-[100vw] min-w-full px-4 sm:px-6 mx-auto overflow-hidden pt-28">
-      <div className="fixed ml-370 opacity-80 [@media(max-width:400px)]:hidden  blur-sm mt-70 " style={{transform:"rotate(30deg)"}}><img className=" w-35 h-32" src="/linkedin-logo-3.png"/></div>
-      <div className="fixed mt-90 ml-20 blur-sm [@media(max-width:400px)]:hidden opacity-80 mixed-blend-multiply " style={{transform:"rotate(240deg)"}}><img className=" w-32 h-32" src="/typescript-logo.png"/></div>
+      <div className="fixed ml-370 opacity-80 [@media(max-width:400px)]:hidden z-0 blur-sm mt-70 " style={{transform:"rotate(30deg)"}}><img className=" w-35 h-32" src="/linkedin-logo-3.png"/></div>
+      <div className="fixed mt-90 ml-20 blur-sm [@media(max-width:400px)]:hidden z-0 opacity-80 mixed-blend-multiply " style={{transform:"rotate(240deg)"}}><img className=" w-32 h-32" src="/typescript-logo.png"/></div>
     <div className="py-8 md:py-12 lg:py-16">
       <div className="flex justify-center mx-auto py-3 max-w-xs sm:max-w-sm md:max-w-md rounded-full shadow-[inset_0px_0px_40px_-3px_rgba(_255,_255,_255,.5)]">
         <span className="flex items-center gap-10 justify-center text-center">
