@@ -331,7 +331,7 @@ export default function DashboardPage() {
                   </div>
                   
                 </div>:
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mt-4 border-1 p-2 rounded-2xl">
+                <div className="flex flex-wrap md:grid-cols-2 gap-4 mt-4 border-1 p-2 max-w-[100%] rounded-2xl">
                   <div>
                     <p className="text-sm text-gray-300">Name</p>
                     <p className="font-bold text-xl">{user.name}</p>

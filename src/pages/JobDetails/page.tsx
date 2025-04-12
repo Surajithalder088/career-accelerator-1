@@ -230,7 +230,7 @@ dispatch(addApplication(ele))  // setting all the job ids this auth user applied
       const res=await axios.post(`${apiUrl}/api/application/application-status`,{applicationId,status},{withCredentials:true})
       console.log("applications:",res);
       
-     navigate(`/job-detail/${id}`)
+     navigate(`/dashboard`)
       
     } catch (error) {
       console.log(error);
@@ -243,7 +243,7 @@ dispatch(addApplication(ele))  // setting all the job ids this auth user applied
     try {
       const res=await axios.post(`${apiUrl}/api/application/application-status`,{applicationId,status},{withCredentials:true})
       console.log("applications:",res);
-      navigate(`/job-detail/${id}`)
+      navigate(`/dashboard`)
       
     } catch (error) {
       console.log(error);
